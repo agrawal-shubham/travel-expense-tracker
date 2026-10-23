@@ -1,0 +1,6 @@
+{
+  "name": "WanderSpend - Travel Expense Tracker",
+  "description": "Track, manage, and analyze your travel expenses across flights, hotels, transfers, food, activities, and more with multi-currency support and budget analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
