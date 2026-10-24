@@ -17,6 +17,7 @@ export type PaymentMethod =
 
 export interface Expense {
   id: string;
+  userId: string;
   tripId: string;
   title: string;
   category: ExpenseCategory;
@@ -36,6 +37,7 @@ export interface Expense {
 
 export interface Trip {
   id: string;
+  userId: string;
   name: string;
   destination: string;
   startDate: string;
@@ -45,6 +47,13 @@ export interface Trip {
   travelers: string[];
   notes?: string;
   categoryBudgets?: Partial<Record<ExpenseCategory, number>>;
+}
+
+export interface UserProfile {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
 }
 
 export interface CurrencyInfo {

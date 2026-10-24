@@ -8,17 +8,19 @@ import {
   PieChart,
   Users,
   Compass,
+  Plus,
 } from 'lucide-react';
 import { Expense, ExpenseCategory, Trip } from '../types';
 import { CATEGORIES, formatCurrency } from '../utils/constants';
 import { CategoryIcon } from './CategoryIcon';
 
 interface TripOverviewProps {
-  trip: Trip;
+  trip: Trip | null;
   expenses: Expense[];
   selectedCategory: ExpenseCategory | 'all';
   onSelectCategory: (category: ExpenseCategory | 'all') => void;
   onOpenTripModal: () => void;
+  onCreateFirstTrip?: () => void;
 }
 
 export const TripOverview: React.FC<TripOverviewProps> = ({
@@ -27,7 +29,35 @@ export const TripOverview: React.FC<TripOverviewProps> = ({
   selectedCategory,
   onSelectCategory,
   onOpenTripModal,
+  onCreateFirstTrip,
 }) => {
+  if (!trip) {
+    return (
+      <div className="p-8 sm:p-12 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xs space-y-4">
+        <div className="w-16 h-16 mx-auto rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+          <Compass className="w-8 h-8" />
+        </div>
+        <div className="max-w-md mx-auto">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+            Clean Slate — Ready for Your Next Journey
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+            No active trips or expenses found. Create a trip with your destination, dates, and budget to begin tracking flights, hotels, transfers, and dining.
+          </p>
+        </div>
+        <div className="pt-2">
+          <button
+            onClick={onCreateFirstTrip || onOpenTripModal}
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold text-sm rounded-xl shadow-lg shadow-blue-500/25 transition inline-flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Create Your First Trip</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Calculations
   const totalSpent = expenses.reduce((sum, exp) => sum + exp.convertedAmount, 0);
   const remainingBudget = trip.budget - totalSpent;

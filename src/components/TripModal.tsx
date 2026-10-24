@@ -5,6 +5,7 @@ import { CURRENCIES } from '../utils/constants';
 
 interface TripModalProps {
   isOpen: boolean;
+  userId: string;
   onClose: () => void;
   onSave: (trip: Trip) => void;
   editingTrip?: Trip | null;
@@ -12,6 +13,7 @@ interface TripModalProps {
 
 export const TripModal: React.FC<TripModalProps> = ({
   isOpen,
+  userId,
   onClose,
   onSave,
   editingTrip,
@@ -83,6 +85,7 @@ export const TripModal: React.FC<TripModalProps> = ({
 
     const payload: Trip = {
       id: editingTrip ? editingTrip.id : `trip-${Date.now()}`,
+      userId: editingTrip ? editingTrip.userId : userId,
       name: name.trim(),
       destination: destination.trim() || name.trim(),
       startDate,

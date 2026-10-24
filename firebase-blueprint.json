@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email"]
+    },
+    "Trip": {
+      "title": "Trip",
+      "description": "Travel trip details and budget",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "destination": { "type": "string", "maxLength": 100 },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "budget": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "travelers": { "type": "array" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "name", "budget", "currency"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Individual travel expense item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "tripId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "convertedAmount": { "type": "number" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "location": { "type": "string", "maxLength": 150 },
+        "paymentMethod": { "type": "string" },
+        "paidBy": { "type": "string", "maxLength": 50 },
+        "splitWith": { "type": "array" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "tripId", "title", "category", "amount", "currency", "convertedAmount", "date", "paymentMethod", "paidBy"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles indexed by UID"
+    },
+    "/trips/{tripId}": {
+      "schema": { "$ref": "#/entities/Trip" },
+      "description": "Trips created by users"
+    },
+    "/expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/Expense" },
+      "description": "Individual expenses associated with user trips"
+    }
+  }
+}

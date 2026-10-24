@@ -6,6 +6,7 @@ import { CategoryIcon, PaymentIcon } from './CategoryIcon';
 
 interface AddExpenseModalProps {
   isOpen: boolean;
+  userId: string;
   onClose: () => void;
   onSave: (expense: Omit<Expense, 'id' | 'createdAt'> | Expense) => void;
   trip: Trip;
@@ -14,6 +15,7 @@ interface AddExpenseModalProps {
 
 export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   isOpen,
+  userId,
   onClose,
   onSave,
   trip,
@@ -87,6 +89,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
     }
 
     const expensePayload = {
+      userId: editingExpense ? editingExpense.userId : userId,
       tripId: trip.id,
       title: title.trim(),
       category,
